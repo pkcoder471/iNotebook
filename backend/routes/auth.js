@@ -1,13 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const authController = require('../controllers/authController');
 
-
-router.get('/',(req,res)=>{
-    const obj = {
-        a:'prateek',
-        number: 34
-    }
-    res.json(obj);
-});
+router.post('/',authController.createUser);
 
 module.exports = router;
