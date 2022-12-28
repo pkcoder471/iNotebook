@@ -4,7 +4,7 @@ const authController = require('../controllers/authController');
 
 const { body } = require('express-validator');
 
-router.post('/',[
+router.post('/createuser',[
     body('name','Enter a Valid name').isLength({ min: 3 }),
     body('email').isEmail(),
     body('password').isLength({ min: 5 }),

@@ -4,16 +4,13 @@ connectTOMongo();
 
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 5000
 
 app.use(express.json());  
 
 
 app.use('/api',require('./routes'));
 
-app.get('/api/v1/', (req, res) => {
-  res.send('Hello World!')
-})
 
 app.listen(port, () => {
   console.log(`Server in running on port ${port}`)
