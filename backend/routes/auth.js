@@ -10,4 +10,8 @@ router.post('/createuser',[
     body('password').isLength({ min: 5 }),
 ],authController.createUser);
 
+router.post('/login',[
+    body('email').isEmail(),
+    body('password',"Password cannot be blank").exists(),
+],authController.login)
 module.exports = router;

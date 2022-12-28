@@ -37,3 +37,41 @@ module.exports.createUser = async function(req,res){
         res.status(500).send("Some Error occured");
     }
 };
+
+module.exports.login = async function(req,res){
+
+    const errors = validationResult(req); 
+    if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {email,password} = req.body;
+
+    try{
+        let user = await User.findOne({email});
+
+        if(!user){
+            return res.status(400).json({error: "Please try to login with correct password"});
+        }
+
+        const passwordCompare = bcrypt.compare(password,user.password);
+
+        if(!passwordCompare){
+            return res.status(400).json({error: "Please try to login with correct credentials"});
+        }
+
+        const data = {
+            user:{
+                id: user.id
+            }
+        }
+        const authToken = jwt.sign(data,JWT_SECRET);
+        res.json({authToken});
+
+
+    }catch(err){
+        console.log(err);
+        res.status(500).send("Internal Server Error");
+    }
+
+}
