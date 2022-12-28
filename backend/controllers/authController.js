@@ -1,7 +1,9 @@
 const User = require('../models/User')
 const {validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
+const JWT_SECRET = "blahsomething";
 module.exports.createUser = async function(req,res){
     try{
     const errors = validationResult(req); 
@@ -22,10 +24,14 @@ module.exports.createUser = async function(req,res){
         password: pass,
       })
       
-    //   .then(user => res.json(user))
-    //   .catch(err=> {console.log(err)
-    // res.json({error: 'Please enter a unique value for email'})})
-    res.json({user});
+    const data = {
+        user:{
+            id: user.id
+        }
+    }
+    const authToken = jwt.sign(data,JWT_SECRET);
+   
+    res.json({authToken});
     } catch(err){
         console.log(err);
         res.status(500).send("Some Error occured");
