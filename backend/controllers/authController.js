@@ -75,3 +75,21 @@ module.exports.login = async function(req,res){
     }
 
 }
+
+
+module.exports.getuser= async function(req,res){
+
+    
+
+    try{
+        const userId = req.user.id;
+        const user = await User.findById(userId).select("-password");
+
+        res.send(user);
+        
+    }catch(err){
+        console.log(err);
+        res.status(500).send("Internal Server Error");
+    }
+
+}

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
-
+const fetchUser = require('../middleware/fetchUser');
 const { body } = require('express-validator');
 
 router.post('/createuser',[
@@ -14,4 +14,8 @@ router.post('/login',[
     body('email').isEmail(),
     body('password',"Password cannot be blank").exists(),
 ],authController.login)
+
+router.post('/getuser',fetchUser,authController.getuser);
+
+
 module.exports = router;
