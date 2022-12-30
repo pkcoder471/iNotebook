@@ -12,6 +12,11 @@ router.post('/addnote',fetchUser,[
     body('description','Description must be atleast 5 characters').isLength({ min: 5 }),
 ],notesController.addnote);
 
+router.put('/updatenote/:id',fetchUser,[
+    body('title','Enter a Valid Title').isLength({ min: 3 }),
+    body('description','Description must be atleast 5 characters').isLength({ min: 5 }),
+],notesController.updatenote);
+
 
 
 
