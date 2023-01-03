@@ -1,8 +1,52 @@
 import NoteContext from "./noteContext";
+import { useState } from "react";
 
 const NoteState = (props)=>{
+    const notesInitial = [
+            {
+              "_id": "63aeede540d488b9ae593a5a",
+              "user": "63ac632604c72fbe6fd2d354",
+              "title": "my note",
+              "description": "Please wak u early",
+              "tag": "personal",
+              "createdAt": "2022-12-30T13:55:49.655Z",
+              "updatedAt": "2022-12-30T13:55:49.655Z",
+              "__v": 0
+            },
+            {
+              "_id": "63b4483b1a7ad2da0b208b67",
+              "user": "63ac632604c72fbe6fd2d354",
+              "title": "my note",
+              "description": "Please wa u early",
+              "tag": "personal",
+              "createdAt": "2023-01-03T15:22:35.537Z",
+              "updatedAt": "2023-01-03T15:22:35.537Z",
+              "__v": 0
+            },
+            {
+              "_id": "63b4484f1a7ad2da0b208b6b",
+              "user": "63ac632604c72fbe6fd2d354",
+              "title": "my note",
+              "description": "Please wake up early",
+              "tag": "personal",
+              "createdAt": "2023-01-03T15:22:55.689Z",
+              "updatedAt": "2023-01-03T15:22:55.689Z",
+              "__v": 0
+            },
+            {
+              "_id": "63b448681a7ad2da0b208b6f",
+              "user": "63ac632604c72fbe6fd2d354",
+              "title": "my note",
+              "description": "nothing",
+              "tag": "personal",
+              "createdAt": "2023-01-03T15:23:20.932Z",
+              "updatedAt": "2023-01-03T15:23:20.932Z",
+              "__v": 0
+            }
+          ]
+    const [notes, setnotes] = useState(notesInitial)
     return (
-        <NoteContext.Provider value={[]}>
+        <NoteContext.Provider value={{notes,setnotes}}>
             {props.children}
         </NoteContext.Provider>
     )
