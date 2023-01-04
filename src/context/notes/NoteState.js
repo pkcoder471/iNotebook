@@ -79,8 +79,23 @@ const NoteState = (props)=>{
         }
         setnotes(notes.concat(newNote));
     }
+
+    const deleteNote = (id)=>{
+      const newNotes = notes.filter((note)=>{return note._id!==id}); 
+      setnotes(newNotes);
+
+    }
+
+    const editNote = (id,title,description,tag)=>{
+      for (let index = 0; index < notes.length; index++) {
+        if(notes[index]._id===id){    
+        notes[index].title = title;
+        notes[index].description = description;
+        notes[index].tag = tag;
+      }
+    }
     return (
-        <NoteContext.Provider value={{notes,setnotes,addNote}}>
+        <NoteContext.Provider value={{notes,setnotes,addNote,deleteNote,editNote}}>
             {props.children}
         </NoteContext.Provider>
     )
