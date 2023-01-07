@@ -40,7 +40,7 @@ module.exports.createUser = async function(req,res){
 };
 
 module.exports.login = async function(req,res){
-
+    let success = false;
     const errors = validationResult(req); 
     if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -52,13 +52,13 @@ module.exports.login = async function(req,res){
         let user = await User.findOne({email});
 
         if(!user){
-            return res.status(400).json({error: "Please try to login with correct password"});
+            return res.status(400).json({success,error: "Please try to login with correct password"});
         }
 
         const passwordCompare = bcrypt.compare(password,user.password);
 
         if(!passwordCompare){
-            return res.status(400).json({error: "Please try to login with correct credentials"});
+            return res.status(400).json({success,error: "Please try to login with correct credentials"});
         }
 
         const data = {
@@ -67,7 +67,8 @@ module.exports.login = async function(req,res){
             }
         }
         const authToken = jwt.sign(data,JWT_SECRET);
-        res.json({authToken});
+        success = true;
+        res.json({success,authToken});
 
 
     }catch(err){
