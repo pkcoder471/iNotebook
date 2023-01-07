@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = "blahsomething";
 module.exports.createUser = async function(req,res){
-    
+    let success = false;
     const errors = validationResult(req); 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -14,7 +14,7 @@ module.exports.createUser = async function(req,res){
     try{
     let user = await User.findOne({email:req.body.email});
     if(user){
-        return res.status(400).json({error: "sorry a user with this email already exists"});
+        return res.status(400).json({success,error: "sorry a user with this email already exists"});
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -31,11 +31,11 @@ module.exports.createUser = async function(req,res){
         }
     }
     const authToken = jwt.sign(data,JWT_SECRET);
-   
-    res.json({authToken});
+    success = true;
+    res.json({success,authToken});
     } catch(err){
         console.log(err);
-        res.status(500).send("Some Error occured");
+        res.status(500).send(success,"Some Error occured");
     }
 };
 
